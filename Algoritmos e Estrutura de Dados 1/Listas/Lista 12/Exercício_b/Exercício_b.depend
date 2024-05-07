@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1697976892 source:c:\users\gustavo\downloads\ex\exercício_b\fila.c
+	<stdio.h>
+	"Fila.h"
+
+1697664484 c:\users\gustavo\downloads\ex\exercício_b\fila.h
+
+1697976892 source:c:\users\gustavo\downloads\ex\exercício_b\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Fila.h"
+
