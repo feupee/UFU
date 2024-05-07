@@ -1,0 +1,2 @@
+horario_entrada1;horario_saida1;CidadeOrigem1;IATAOrigem1;CidadeDestino1;IATADestino1;data1;vagas1;200;codigo_voo1
+horario_entrada2;horario_saida2;CidadeOrigem2;IATAOrigem2;CidadeDestino2;IATADestino2;data2;vagas2;300;codigo_voo2

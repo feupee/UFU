@@ -1,0 +1,225 @@
+Código: ABC12345
+Data de Entrada: 2024-02-11
+Data de Saída: 2024-02-12
+Origem: São Paulo
+Destino: Rio de Janeiro
+Voos:
+
+Código: XYZ98765
+Data de Entrada: 2024-03-15
+Data de Saída: 2024-03-16
+Origem: Nova York
+Destino: Los Angeles
+Voos:
+
+Código: DEF45678
+Data de Entrada: 2024-04-20
+Data de Saída: 2024-04-21
+Origem: Londres
+Destino: Paris
+Voos:
+
+Código: QRS23456
+Data de Entrada: 2024-05-25
+Data de Saída: 2024-05-26
+Origem: Tóquio
+Destino: Pequim
+Voos:
+
+Código: JKL78901
+Data de Entrada: 2024-06-30
+Data de Saída: 2024-07-01
+Origem: Sydney
+Destino: Melbourne
+
+Companhia Aérea 1:
+
+CNPJ: 12345678901234
+Nome Oficial: Empresa Aérea Internacional Ltda.
+Nome de Divulgação: Voe Mais
+Data de Criação: 01/01/1990
+Companhia Aérea 2:
+
+CNPJ: 98765432109876
+Nome Oficial: Transportadora Aérea Nacional SA
+Nome de Divulgação: Aéreo Brasil
+Data de Criação: 15/07/1985
+Companhia Aérea 3:
+
+CNPJ: 45678901234567
+Nome Oficial: Voo Expresso Ltda.
+Nome de Divulgação: Veloz Airlines
+Data de Criação: 10/03/2000
+Companhia Aérea 4:
+
+CNPJ: 76543210987654
+Nome Oficial: Companhia Aérea Regional S.A.
+Nome de Divulgação: Voe Brasil
+Data de Criação: 05/11/1995
+Companhia Aérea 5:
+
+CNPJ: 23456789012345
+Nome Oficial: Transporte Aéreo Global Ltda.
+Nome de Divulgação: Mundo Voando
+Data de Criação: 20/09/2005
+
+IDEIA::
+
+import java.util.Date;
+
+public class Companhia_Aerea {
+    private String cnpj;
+    private String nomeOficial;
+    private String nomeDivulgacao;
+    private Date dataCriacao;
+    
+    // Construtor, getters e setters
+}
+
+public class Voo {
+    private String codigoIdentificador;
+    private String origem;
+    private String destino;
+    private Date horaSaida;
+    private Date horaChegada;
+    private Companhia_Aerea companhiaAerea;
+    
+    // Construtor, getters e setters
+}
+
+public class Hotel {
+    private String cnpj;
+    private String nomeOficial;
+    private String nomeDivulgacao;
+    private String enderecoCompleto;
+    private Date dataCriacao;
+    private int numeroEstrelas;
+    private boolean aceitaPets;
+    private int numeroTotalQuartos;
+    private Date horarioCheckIn;
+    private Date horarioCheckOut;
+    
+    // Construtor, getters e setters
+}
+
+public class Funcionario {
+    private String nome;
+    private String cpf;
+    private String enderecoCompleto;
+    private String carteiraTrabalho;
+    private Date dataNascimento;
+    private double salarioFixo;
+    
+    // Construtor, getters e setters
+}
+
+public class Cliente {
+    private String cpf;
+    private String nome;
+    private String enderecoCompleto;
+    private Date dataNascimento;
+    private Date dataCadastro;
+    private String email;
+    private boolean clienteVip;
+    private double valorDescontoVip;
+    private Date dataClienteVip;
+    
+    // Construtor, getters e setters
+}
+
+public class Pesquisa {
+    private String origem;
+    private String destino;
+    private Date dataInicio;
+    private Date dataFim;
+    private Date dataHoraRealizacao;
+    
+    // Construtor, getters e setters
+}
+
+public class Compra {
+    private Voo voo;
+    private Hotel hotel;
+    private int quantidadePassagens;
+    private int quantidadeDiarias;
+    private Cliente cliente;
+    private Date dataHoraCompra;
+    private double valorTotal;
+    private String formaPagamento;
+    
+    // Construtor, getters e setters
+}
+
+exemplos de hoteis:
+
+Hotel Plaza
+
+CNPJ: 12345678901234
+Nome oficial: Hotel Plaza
+Nome de divulgação: Plaza Hotel
+Endereço completo: Av. Central, 100, Centro, Cidade Nova, Estado
+Ano de criação: 1990
+Horário do check-in: 14:00
+Horário do check-out: 12:00
+Mensagem de divulgação: "Hotel 5 estrelas com vista panorâmica da cidade e spa"
+Cidade: Cidade Nova
+Número de estrelas: 5
+Aceita pets: Sim
+Número total de quartos: 200
+Hotel Maré Azul
+
+CNPJ: 98765432109876
+Nome oficial: Hotel Maré Azul
+Nome de divulgação: Maré Azul
+Endereço completo: Rua das Ondas, 50, Praia do Sol, Cidade Praiana, Estado
+Ano de criação: 2005
+Horário do check-in: 15:00
+Horário do check-out: 11:00
+Mensagem de divulgação: "Hotel à beira-mar com piscina e restaurante gourmet"
+Cidade: Cidade Praiana
+Número de estrelas: 4
+Aceita pets: Não
+Número total de quartos: 150
+Hotel Montanha Vista
+
+CNPJ: 56789012345678
+Nome oficial: Hotel Montanha Vista
+Nome de divulgação: Montanha Vista
+Endereço completo: Rua das Montanhas, 10, Centro, Cidade Serrana, Estado
+Ano de criação: 1980
+Horário do check-in: 13:00
+Horário do check-out: 12:00
+Mensagem de divulgação: "Hotel nas montanhas com trilhas ecológicas e lareira"
+Cidade: Cidade Serrana
+Número de estrelas: 3
+Aceita pets: Sim
+Número total de quartos: 100
+
+Hotel Luxor Palace
+
+CNPJ: 34567890123456
+Nome oficial: Hotel Luxor Palace
+Nome de divulgação: Luxor Palace
+Endereço completo: Av. das Estátuas, 500, Centro Histórico, Cidade Antiga, Estado
+Ano de criação: 2008
+Horário do check-in: 14:00
+Horário do check-out: 12:00
+Mensagem de divulgação: "Hotel de luxo com spa, academia e restaurante cinco estrelas"
+Cidade: Cidade Antiga
+Número de estrelas: 5
+Aceita pets: Não
+Número total de quartos: 300
+Hotel Vila Verde
+
+CNPJ: 45678901234567
+Nome oficial: Hotel Vila Verde
+Nome de divulgação: Vila Verde
+Endereço completo: Rua das Flores, 20, Jardim Botânico, Cidade Verde, Estado
+Ano de criação: 1995
+Horário do check-in: 12:00
+Horário do check-out: 11:00
+Mensagem de divulgação: "Hotel charmoso com jardim exuberante e café da manhã colonial"
+Cidade: Cidade Verde
+Número de estrelas: 4
+Aceita pets: Sim
+Número total de quartos: 120
