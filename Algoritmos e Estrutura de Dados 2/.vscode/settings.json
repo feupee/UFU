@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "lista_de_adjascencia_sem_peso.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "string.h": "c",
+        "arvore_binaria.h": "c",
+        "tad.h": "c",
+        "windows.h": "c",
+        "lista_de_adjascencia.h": "c",
+        "conio.h": "c"
+    },
+    "C_Cpp.dimInactiveRegions": false
+}

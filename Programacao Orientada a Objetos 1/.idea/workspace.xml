@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="375f1911-b6b1-4f37-b660-f49b46684e14" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Documentação do Projeto.docx" beforeDir="false" afterPath="$PROJECT_DIR$/Documentação do Projeto.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDI-DECOLA/src/Agencia_De_Viagem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDI-DECOLA/src/Companhia_Aerea.java" beforeDir="false" afterPath="$PROJECT_DIR$/UDI-DECOLA/src/Companhia_Aerea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDI-DECOLA/src/Compras.java" beforeDir="false" afterPath="$PROJECT_DIR$/UDI-DECOLA/src/Compras.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDI-DECOLA/src/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/UDI-DECOLA/src/Hotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDI-DECOLA/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/UDI-DECOLA/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UDI-DECOLA/src/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/UDI-DECOLA/src/Pessoa.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2eL9c71NqUgEbIcjetfNgwCAgqS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/felip/OneDrive/Desktop/Facul/UFU/UFU-BCC-70/Programação Orientada a Objetos 1/UDI-DECOLA",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="375f1911-b6b1-4f37-b660-f49b46684e14" name="Changes" comment="" />
+      <created>1711673069267</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711673069267</updated>
+    </task>
+    <servers />
+  </component>
+</project>
