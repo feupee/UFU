@@ -1,0 +1,3 @@
+Nome: Felipe, Idade: 19, Maior de idade
+Nome: Caio, Idade: 18, Entrando na maior de idade
+Nome: Emmanuel, Idade: 11, Menor de idade

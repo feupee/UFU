@@ -1,0 +1,6 @@
+Miojo 10 0.79
+Ovos 1 3.10
+Pao 0.5 6.0
+Leite 2 2.10
+Sardinha 5 2.20
+Salsicha 1 4.50
