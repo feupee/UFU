@@ -1,0 +1,539 @@
+---
+title: "Lista 01"
+author: "Matheus Dantas e Felipe Santos"
+format: html
+editor: visual
+lang: "pt-br"
+---
+
+# Exercício 1
+
+Crie os seguintes vetores: a) (10, 11, 12,…, 30) b) (30, 29, 28,…, 10) c) (10, 11, 12,…, 30, 29, 28,…, 10)
+
+```{r}
+vetorA <- 10:30
+
+vetorB <- 30:10
+
+vetorC <- c(vetorA, vetorB)
+```
+
+# Exercício 2
+
+Use a função help do R para descobrir o funcionamento das funções rep e seq. Em seguida, utilize estas funções para resolver os seguintes itens:
+
+## a)
+
+Crie o vetor (2, 4, 6, 8, 2, 4, 6, 8,…, 2, 4, 6, 8), em que há dez ocorrências do número 2.
+
+```{r}
+vetorOcorrencia2 <- rep(seq(2, 8, length.out = 4), 10)
+```
+
+## b)
+
+Crie o vetor (2, 4, 6, 8, 2, 4, 6, 8,…, 2, 4, 6, 8, 2), em que há onze ocorrências do número 2 e dez ocorrências dos números 4, 6 e 8.
+
+```{r}
+vetorOcorrencia3 <- c(rep(seq(2, 8, by = 2), 10), 2)
+```
+
+# Exercício 3
+
+Utilize a estrutura de vetores do R para realizar as seguintes somas:
+
+## a)
+
+∑n=20-\>30(𝑛2 + 4𝑛);
+
+```{r}
+soma1 <- 20:30
+soma1 <- (soma1**2) + (4 * soma1)
+soma1 <- sum(soma1)
+soma1
+```
+
+## b)
+
+∑n=10-\>20(3\^𝑛/𝑛 + 2^𝑛/n^2)
+
+```{r}
+soma2 <- 10:20
+soma2 <- (3**soma2)/soma2 + (2**soma2)/(soma2**2)
+soma2 <- sum(soma2)
+soma2
+```
+
+# Exercício 4
+
+Numa urna há bolas idênticas numeradas de 1 até 100. Serão extraídas 40 bolas com reposição desta urna. Simule este experimento e guarde o resultado dos sorteios em um vetor.
+
+```{r}
+resultadoSorteio <- sample(1:100, size = 40, replace = TRUE)
+resultadoSorteio
+```
+
+## a)
+
+Quantas bolas pares foram sorteadas?
+
+```{r}
+QuantidadePares <- sum(resultadoSorteio%%2==0)
+QuantidadePares
+```
+
+## b)
+
+Quantas bolas maiores do que 70 foram sorteadas?
+
+```{r}
+QuantidadeMaior70 <- sum(resultadoSorteio>70)
+QuantidadeMaior70
+```
+
+## c)
+
+Em quais retiradas (posições) foram sorteadas as bolas ímpares?
+
+```{r}
+posicoesimpares <- which(resultadoSorteio%%2!=0)
+posicoesimpares
+```
+
+# Exercício 5
+
+Crie um função no R que irá simular sucessivos lançamentos de um dado até que o número 4 seja obtido pela segunda vez. A função deverá retornar o número de lançamentos que foram necessários até o 4 ser obtido pela segunda vez. Assim, se os sorteios foram 3, 6, 6, 5, 4, 2, 4 a função deverá retornar 7.
+
+```{r}
+quatroPelaSegundaVez <- function(){
+  lancamentos <- c()
+  repeat{
+    dado <- c(sample(x = 1:6, size = 1, replace = TRUE))
+    lancamentos <- c(lancamentos, dado)
+    
+    if(sum(c(lancamentos == 4 )) > 1)
+      break
+  }
+  return(length(lancamentos))
+}
+
+quatroPelaSegundaVez()
+```
+
+# Exercício 6
+
+Utilize a função do exercício anterior para replicar o experimento dez mil vezes. Para cada replicação, guarde o número de lançamentos num vetor chamado quantidades. Por fim, calcule a média de quantidades. Interprete o resultado obtido.
+
+```{r}
+quantidades <- replicate(10000, quatroPelaSegundaVez())
+mean(quantidades)
+# Em média, é nescessário jogar o dado 12 vezes, para que se obtenha o numero o mesmo numero duas vezes. Ou seja, em média, passamos por todos os números do dado ao arremesá-lo 12 vezes
+```
+
+# Exercício 7
+
+Os dois primeiros termos da sequência de Fibonacci são iguais a 1. Os termos subsequentes da sequência são encontrados somando os dois termos imediatamente anteriores. Escreva uma função com parâmetro de entrada n chamada fibonacci que retornará os primeiros n termos da sequência de Fibonacci para qualquer 𝑛 ≥ 3. Exemplo: fibonacci(10) \[1\] 1 1 2 3 5 8 13 21 34 55
+
+```{r}
+fibonacci <- function(n){
+  fib <- c(1,1)
+  for(i in 1:n-1){
+    novo <- fib[i-1] + fib[i]
+    fib <- c(fib, novo)
+  }
+  return(fib)
+}
+
+fibonacci(15)
+```
+
+# Exercício 8
+
+Michael Scott é gerente regional da empresa Dunder Mufflin. Para as festividades de fim de ano, Michael propôs aos funcionários Dwight Schrute, Jim Halpert, Kevin Malone e Creed Bratton a realização de um amigo oculto entre eles. Consideraremos que o sorteio do amigo oculto deu errado quando uma pessoa sortear ela mesma (Michael tira Michael, por exemplo). Simule o sorteio do amigo oculto. Se ele deu certo, atribua o valor 1; caso contrário, atribua o valor 0 (zero). Em seguida, replique este experimento cem mil vezes e calcule a proporção de vezes que o amigo oculto deu errado.
+
+```{r}
+AmigoOculto <- function(nomes) {
+    # Embaralha os nomes aleatoriamente
+    sorteio <- sample(nomes)
+    
+    # Verifica se alguém se sorteou a si mesmo ou seja compara cada elemento do vetor sorteio com o vetor nomes
+    if (!any(sorteio == nomes)) {
+      return(TRUE)  # Sorteio válido
+    }else{
+      return(FALSE)
+    }
+}
+# Nomes
+nomes <- c("Dwight Schrute", "Jim Halpert", "Kevin Malone", "Creed Bratton")
+
+# Executa a função 100.000 vezes
+resultados <- replicate(100000, AmigoOculto(nomes))
+
+# Verifica a proporção de sorteios válidos
+proporcao <- mean(resultados)
+print(proporcao)
+
+```
+
+# Exercício 9
+
+No jogo de Craps dois dados são lançados: • se a soma for 7 ou 11, você ganha o jogo; • se a soma for 2,3 ou 12, você perde o jogo; • caso contrário, os dois dados são rolados novamente até obter-se 7 (você perde) ou até obter-se a soma inicial (você ganha). Simule uma partida do jogo de Craps. Em seguida, replique este experimento 100 mil vezes; para cada experimento, atribua 1 para uma vitória e zero para uma derrota. Calcule a proporção de vezes que você ganhou o jogo. Exemplo: as seguintes sequências (cada entrada é a soma dos dois dados) resultam em vitória: (7), (11), (5, 4, 5), (4, 5, 6, 12, 4); as seguintes sequências resultam em derrota: (2), (4, 11, 7), (8, 5, 2, 3, 9, 7
+
+```{r}
+craps <- function(){
+    #lança dois dados
+    lancamento <- sample(x = 1:6, size = 2, replace = TRUE) 
+    somaInicial <- sum(lancamento) #soma
+    if(somaInicial %in% c(7,11)){ #se foi 7 ou 11, ganha
+      return(TRUE)
+    }else if(somaInicial %in% c(2,3,12)){ # se foi 2,3 ou 12, perde
+      return(FALSE)
+    }else{ #se nao, repete  até...
+      repeat{
+        lancamento <- sample(x = 1:6, size = 2, replace = TRUE)
+        soma <- sum(lancamento)
+        if(soma == 7){ #soma 7 perde
+          return(FALSE)
+        }else if(soma == somaInicial){ #soma igual a inicial ganha
+          return(TRUE)
+        }
+      }
+    }
+}
+
+craps()
+jogos <- replicate(100000, craps())
+mean(jogos)
+```
+
+# Exercício 10
+
+Luke Skywalker realizará o seguinte passeio aleatório na reta: a reta do passeio é formada pelos números inteiros de zero até 𝑁; Luke está em um ponto 𝐿 que é maior do que zero e menor do que 𝑁;Luke lança uma moeda honesta; se sair coroa, ele dá um passo para a esquerda (e termina na posição 𝐿 − 1 da reta); se sair cara, ele dá um passo para a direita (e termina na posição 𝐿 + 1 da reta). Luke continuará a lançar a moeda e se deslocará até que ele chegue em sua casa (e lá ele vai dormir e o passeio acaba) ou até que ele chegue (caia) no precipício (e, óbvio, o passeio também acaba nesse caso).
+
+## a)
+
+Para 𝑁 = 20, crie uma função cuja entrada seja 𝐿 (um número maior do que zero e menor do que 20) e que retorne 1 se Luke terminou um passeio em sua casa ou retorne zero se Luke caiu no precipício.
+
+```{r}
+Passeio <- function(Ponto_L){
+    
+    while (TRUE) {  # Continua enquanto Ponto_L for maior que 0
+      if(Ponto_L == 20){
+        return(1) #Luke concluio o passeio
+      }
+      if(Ponto_L == 0){
+        return(0) #Luke caio no precipício
+      }
+      resultado_caracoroa <- sample(c(0, 1), 1)  # 0 para cara, 1 para coroa
+      if (resultado_caracoroa == 0) {
+        Ponto_L <- Ponto_L + 1
+      } else {
+        Ponto_L <- Ponto_L - 1
+      }
+    }
+    
+    return(Ponto_L)
+  }
+  
+  # Executa a função 10 vez
+  resultado <- replicate(10, Passeio(10)) #Pode ser substituido por qualquer valor
+  print(resultado)
+
+```
+
+## b)
+
+Crie uma função cuja entrada seja 𝐿; esta função deverá replicar o passeio da letra (a) 10 mil vezes e retornar a proporção de vezes que Luke chegou em sua casa. Sugestão: crie um vetor que, para cada replicação, guardará o resultado de um passeio; cada entrada deste vetor será zero ou 1; zero se Luke caiu no precipício e 1 se Luke chegou em casa.
+
+```{r}
+# Executa a função 10000 vez
+  resultado <- replicate(10000, Passeio(10))
+  mean(resultado) # Já considera 1 como os valores verdadeiro e faz a proporção em cima deles
+
+```
+
+## c)
+
+Use a função criada em (b) para 𝐿 = 1, 2, … , 19 e, em seguida, use esses valores para plotar um gráfico de 𝑥 = 1 ∶ 19 por 𝑦, em que 𝑦 são as proporções retornadas pela função criada em (b) para cada 𝑥
+
+```{r}
+# Vetor para armazenar os resultados das proporções
+  resultados_proporcao <- numeric(19)
+  
+  # Loop para calcular as proporções para cada valor de L de 1 a 19
+  for (i in 1:19) {
+    resultados <- replicate(10000, Passeio(i))
+    proporcao <- mean(resultados)
+    resultados_proporcao[i] <- proporcao
+  }
+  
+  # Criar um data frame para usar no ggplot
+  df_resultados <- data.frame(L = 1:19, Proporcao = resultados_proporcao)
+  
+  # Carregar a biblioteca ggplot2 se ainda não estiver carregada
+  library(ggplot2)
+  
+  # Plotar o gráfico de barras das proporções
+  ggplot(data = df_resultados, aes(x = as.factor(L), y = Proporcao)) +
+    geom_bar(stat = "identity", fill = "blue") +
+    labs(x = "L", y = "Proporção Média") +
+    theme_minimal()
+
+```
+
+# Exercício 11
+
+Link desperta após um sono de cem anos e encontra o reino de Hyrule em ruínas, necessi- tando recuperar suas memórias e enfrentar o mal desencadeado por Calamity Ganon. Desprovido de suas lembranças, Link adota um método peculiar para explorar o reino: lançando um dado de 4 lados. As faces deste dado são rotuladas como 𝐿, 𝑅, 𝑈 e 𝐷. A direção de cada passo que Link dá é determinada pelo resultado do dado que ele lança: se sair 𝐿 ele dá um passo para a esquerda; se sair 𝑅, ele dá um passo para a direita; se sair 𝑈 , ele dá um passo para cima; se sair 𝐷, ele dá um passo para baixo. Suponha que Link comece sua jornada no ponto (0, 0) e que os quatro primeiros lançamentos do dado foram 𝑅, 𝑈 , 𝐿 e 𝐿. Portanto, a sequência de passos de Link, neste caso, é: (0, 0) → (1, 0) → (1, 1) → (0, 1) → (−1, 1). As Figuras 1, 2 e 3 apresentam, respectivamente, Link no início de sua jornada, após o primeiro lançamento do dado e após o segundo lançamento do dado; a Figura 4 apresenta o percurso total feito por Link após os quatro lançamentos.
+
+## a)
+
+Simule um passeio de 8 passos com Link começando na origem. A saída desta simulação deve apresentar o ponto do plano em que Link está após os 8 passos
+
+```{r}
+link <- function(n){
+  pos <- c(0, 0)
+  dado <- c('U','D','L','R')
+  resultados <- sample(x = dado, size = n, replace = TRUE)
+  for(i in resultados){
+    if(i == 'U')
+      pos <- pos+c(0,1)
+    else if(i == 'D')
+      pos <- pos+c(0,-1)
+    else if(i == 'L')
+      pos <- pos+c(-1,0)
+    else if(i == 'R')
+      pos <- pos+c(1,0)
+  }
+  return(pos)
+}
+n <- 8
+link(n)
+```
+
+## b
+
+Agora replique dez mil vezes o experimento de (a) e determine a proporção de vezes em que Link retornou para a origem depois de 8 passos. Comente o que esta proporção significa.
+
+```{r}
+n <- 8
+#adiciona num vetor booleano 10000 vezes se o resultado da função link() é igual a (0,0)
+resultados <- replicate(10000, identical(link(n), c(0,0)))
+mean(resultados)
+
+#A chance de link voltar ao inicio após 8 passos nas 4 direções aleatoriamente é de 7~8%
+```
+
+## c
+
+Escreva uma função em que o usuário entra com um número 𝑁 : se o número 𝑁 for ímpar, então a função retorna: “impossível retornar a origem depois de um número ímpar de passos” (quando estiver estudando esta questão, se convença que ’isso é verdadeé impossível regressar à origem em um número de passos ímpar); se o número 𝑁 for par, então a função retorna uma frase informando a proporção de vezes em que Link retornou a origem depois de 𝑁 passos ao se realizar o experimento dez mil vezes.
+
+```{r}
+numeroDePassos <- function(n){
+  if(n%%2 == 1){
+    return("impossível retornar a origem depois de um número ímpar de passos")
+  }
+  else{
+    #repete a função de (b)
+    return(mean(replicate(10000, identical(link(n), c(0,0)))))
+  }
+}
+m <- 15
+numeroDePassos(m)
+m <- 14
+numeroDePassos(m)
+```
+
+# Exercício 12
+
+Considere o seguinte jogo: Steven e Garnit escolherão, cada um, uma sequência de tamanho 3 em que cada entrada da sequência é cara ou coroa; logo em seguida, uma moeda será lançada três vezes; se aparecer a sequência de um dos jogadores, este jogador vence e o jogo acaba; caso não apareça a sequência de nenhum deles, a moeda é lançada pela quarta vez e os três últimos lançamentos são analisados; se nestes três últimos lançamentos aparecer a sequência de um dos jogadores, este jogador vence e o jogo acaba. Se isto não acontecer, a moeda é lançada pela quinta vez e os três últimos resultados são analisados; se aparecer a sequência de um dos jogadores, este jogador vence e o jogo acaba. Este processo é realizado até que apareça a sequência que um dos dois escolheu; se aparecer primeiro a sequência de Steven, ele ganha; se aparecer primeiro a sequência de Garnit, ela vence. Convencione que cara seja 1 e que coroa seja zero. Supondo que Steven escolheu a sequência (0, 1, 0) e que Garnit escolheu a sequência (0, 0, 1), simule uma partida deste jogo. A simulação deve retornar steven caso Steven tenha vencido ou deve retornar garnit caso contrário. Replique o experimento 10 mil vezes e calcule a média de vitórias de Garnit. Comente o resultado obtido.
+
+Observação: Suponha que os três primeiros lançamentos foram (1,0,0). Logo, ninguém ganhou e a moeda é lançada pela quarta vez. Suponha que o quarto lançamento foi 0; logo os três últimos lançamentos foram (0,0,0) e ninguém ganhou. Na quinta vez saiu 1 e, portanto, os três últimos lançamentos foram (0,0,1) e o jogo acaba com vitória de Garnit. As sequências (0, 1, 0), (1, 0, 1, 0) e (1, 1, 0, 1, 0) fazem Steven vitorioso; as sequências (0, 0, 1), (0, 0, 0, 1) e (1, 0, 0, 0, 1) fazem Garnit vitoriosa.
+
+```{r}
+JogoCaraCoroa <- function(){
+    
+  sequenciaSteven <- c(0,1,0)
+  sequenciaGarnit <- c(0,0,1)
+  sequenciaCaraCoroa <- sample(c(1,0), size = 3, replace = TRUE)
+  
+  repeat{
+      if(all(sequenciaSteven == sequenciaCaraCoroa)){
+        return("steven")
+      }
+      if(all(sequenciaGarnit == sequenciaCaraCoroa)){
+      return("garnit")
+      }
+    # Tirando valor mais desatualizado
+    sequenciaCaraCoroa <- sequenciaCaraCoroa[-1] 
+    # Adicionando um novo arremesso
+    sequenciaCaraCoroa <- c(sequenciaCaraCoroa, sample(c(1,0), size = 1))
+  }
+  
+}
+
+resultadoCaraCoroa <- JogoCaraCoroa()
+JOGOSCaraCoroa <- replicate(10000, JogoCaraCoroa())
+mean(JOGOSCaraCoroa == "garnit")
+
+
+# A sequencia escolhida por garnit possui, matematicamente, mais chance de ocorrer, que a sequencia escolhida por steven, logo garnit ganhará a maioria dos jogos 
+```
+
+# Exercício 13
+
+Harold Frederick Shipman (Nottingham, 14 de janeiro de 1946 — Wakefield, 13 de janeiro de 2004), conhecido como “Doutor Morte”, foi um médico e assassino em série britânico condenado pela morte de muitos pacientes entre as décadas de 1970 e 1990. Dr. Shipman é, talvez, o assassino em série mais prolífico da História Moderna. O arquivo dados.txt contém informações sobre o sexo, a idade, o local da morte (casa do paciente; hospital; casa de repouso) e o ano da morte das vítimas de Shipman. Antes de responder as questões abaixo, abra o arquivo dados.txt e compreenda sua estrutura. Importe o arquivo para o R e utilize-o para responder os seguintes itens
+
+```{r}
+dadosHarold <- read.table("dados.txt", header = TRUE, sep = ";")
+library(ggplot2)
+```
+
+## a)
+
+Escolha um gráfico apropriado para representar as frequências das categorias da variável sexo. Comente os resultados encontrados
+
+```{r}
+ggplot(data = dadosHarold, mapping = aes(x = Genero, fill = Genero)) + geom_bar() + theme_gray()
+
+# Harold matou muito mais mulheres que homens
+```
+
+## b
+
+Apresente o histograma da variável idade em 8 (argumento bins na geometria do histograma) intervalos.Comente os resultados obtidos. Analise este gráfico para cada gênero
+
+```{r}
+ggplot(data = dadosHarold, mapping = aes(x = Idade, fill = Genero)) + geom_histogram(bins = 8)  + theme_gray()
+
+#Independetemente de sexo, as vitimas de harold se concentraram nos mais idosos (70 a 90). nao houveram mortes de homens na faixa de 45 a 65 anos, ou mais velhos que 90
+```
+
+## c
+
+Apresente o boxplot da variável idade. Comente os resultados obtidos
+
+```{r}
+ggplot(data = dadosHarold, mapping = aes(y = Idade, fill = "lightgreen")) + geom_boxplot() + theme_gray()
+
+# Percebe-se que grande parte de suas vítimas estavam proximos aos 80 anos, e a maioria entorno dessa idade. Mas houveram casos de vítimas mais jovens, com cerca de 40 e 50 anos também
+```
+
+## d
+
+Apresente um gráfico para representar o local da morte. Comente os resultados obtidos
+
+```{r}
+ggplot(data = dadosHarold, mapping = aes(x = LocalDaMorte, fill = LocalDaMorte)) + geom_bar() + theme_gray()
+
+#Claramente, Harold tinha uma preferencia em levar suas vítimas até sua casa. Mas como era doutor, houveram alguns casos em hospitais e lares para idosos também.
+```
+
+## e
+
+Analise graficamente o ano da morte das vítimas de Harold Shipman.
+
+```{r}
+ggplot(data = dadosHarold, mapping = aes(x = AnoDaMorte, fill = "blue")) + geom_bar() + theme_gray()
+
+#Ativo desde 75, mas com um foco em seus últimos 5 anos de atividade
+```
+
+## f
+
+Com base nas informações obtidas nos itens anteriores, escreva um parágrafo sobre o padrão e o perfil das vítimas de Harold Shipman.
+
+```{r}
+# Com base na analise das vítimas de Harold, pode-se concluir que tinha uma preferencia em levar suas vítimas diretamentes para sua casa, as quais eram majoritariamente idosos. Doutor morte matou muito mais mulheres que homens e cometeu seus crimes durante 20 anos, sendo que ao longo dos anos, a quantidade de vítimas tendia a crescer.
+
+```
+
+# Exercício 14.
+
+Os bonobos, também conhecidos como chimpanzés-pigmeus, são encontrados apenas em uma área limitada da República Democrática do Congo, na África Central. Eles são conhecidos por sua sociedade matriarcal, onde as fêmeas têm um papel dominante na tomada de decisões e na resolução de conflitos. Os bonobos são geralmente mais pacíficos do que os chimpanzés, e os conflitos dentro do grupo são frequentemente resolvidos através de interações sociais, como a partilha de alimentos e o sexo. Eles são altamente sociais e valorizam as relações e o contato físico com outros membros do grupo. Por outro lado, os chimpanzés têm uma distribuição mais ampla, encontrados em várias regiões da África Central e Ocidental. Eles têm uma sociedade mais hierárquica e dominada por machos, onde o poder é frequentemente obtido por meio de competição e agressão. Os chimpanzés também exibem comportamentos violentos e podem entrar em confrontos territoriais com outros grupos. Eles são conhecidos por usar ferramentas, como galhos para pescar cupins e pedras para quebrar nozes. O conjunto primatas.txt apresenta informações sobre tamanho (centímetros), peso (libras) e gênero de bonobos e de chimpanzés. Abra o arquivo e veja como ele está organizado.
+
+## a)
+
+Importe o arquivo para o ambiente do R. Conheça sua estrutura e peça um resumo dos dados com alguma função.
+
+```{r}
+Primatas <- read.table(file = "primatas.txt", sep = ":", header = TRUE)
+
+str(Primatas)
+summary(Primatas)
+```
+
+## b)
+
+Construa um gráfico de barras contando quantas espécies de bonobos e chimpanzés há no conjunto.Construa também um gráfico de barras mostrando a frequência de machos e fêmeas de cada espécie.
+
+```{r}
+ggplot(data = Primatas, aes(x = especie, fill = genero))+
+  geom_bar()+
+  theme_minimal()
+
+```
+
+## c)
+
+Construa um gráfico para comparar as fêmeas e os machos dos bonobos. Em seguida, construa, também, um gráfico para comparar as fêmeas e os machos dos chimpanzés
+
+```{r}
+ggplot(Primatas, aes(x = altura, y = peso, color = genero)) +
+  geom_point() +  # Pontos para cada observação
+  facet_wrap(~especie) +  # separar Bonobos e Chimpanzés
+  theme_minimal()
+
+```
+
+## d)
+
+Construa um gráfico para comparar as fêmeas dos bonobos e dos chimpanzés. Em seguida, construa também um gráfico para comparar os machos dos bonobos e dos chimpanzés
+
+```{r}
+
+ggplot(Primatas, aes(x = altura, y = peso, color = especie)) +
+  geom_point() +
+  facet_wrap(~genero) +  # separar por genero
+  theme_minimal()  
+
+```
+
+## e)
+
+A partir das análises dos itens anteriores, escreva um pequeno texto contendo informações sobre os bonobos e os chimpanzés, como exemplo: diferenças entre os gêneros de cada espécie e diferenças entre as espécies
+
+```{r}
+ #R: Foi apresentado dados aproximados de 1000 macacos, tendo em média 500 bonobos e 500 chimpazes, sendo eles em média 250 fêmeas e 250 machos cada. É pssível perceber que os Bonobos em relação aos chipamzés são menores, porém os bonobos machos em comparação com as fêmeas dos chipamzés tem dados de peso/altura parecidos. É possível perceber também que dentre os bonobos e chipamzés os machos são predominantemente maiores que as fêmeas em relação a peso/altura.
+```
+
+## f)
+
+A partir das variáveis tamanho, peso e genero, construa um modelo de árvore de decisão utilizando estruturas condicionais que seja capaz de prever a espécie de uma observação. Calcule a acurácia do modelo
+
+```{r}
+Primatas <- Primatas[sample(nrow(Primatas)), ]
+
+n <- round(0.8*nrow(Primatas))
+
+treinamento <- Primatas[1:n,]
+
+teste <- Primatas[-(1:n),]
+
+resultados <- c() #vetor para armazenar as previsões do modelo
+
+for (i in 1:nrow(teste)) {
+     if (teste$peso[i] > 52) {
+         resultados[i] <- "chimpanze"
+       } else if (teste$peso[i] >= 39 & teste$altura[i] >= 128) {
+           resultados[i] <- "bonobo"
+         } else if (teste$peso[i] >= 39 & teste$altura[i] < 128) {
+             resultados[i] <- "chimpanze"
+           } else{
+               resultados[i] <- "bonobo"
+             }
+   }
+
+  
+mean(teste$especie == resultados) #acurácia do modelo
+
+```
