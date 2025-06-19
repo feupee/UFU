@@ -1,0 +1,8 @@
+A) Por que o comando new é necessário para criar objetos em Java?
+    O operador new é necessário porque ele aloca dinamicamente memória para o novo objeto e chama o construtor da classe, inicializando seus atributos conforme definido. 
+
+    B). O que acontece se você usar uma variável de uma classe que não foi inicializada com new?
+    Ela conterá o valor null. Tentar acessar métodos ou atributos dessa variável resultará em uma exceção do tipo NullPointerException em tempo de execução, assim dando erro.
+
+    C) Como os tipos primitivos se diferenciam das classes?
+    Os tipos primitivos armazenam diretamente seus valores na memória e não requerem alocação dinâmica. Já as classes armazenam referências a objetos na memória, exceto no caso de String, que pode ser inicializada de forma literal.

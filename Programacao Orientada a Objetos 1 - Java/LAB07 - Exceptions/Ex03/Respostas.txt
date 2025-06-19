@@ -1,0 +1,11 @@
+throw: Lança uma exceção dentro do método.
+Exemplo: throw new IllegalArgumentException("Erro");
+
+throws: Declara que o método pode lançar exceções.
+Exemplo: public void metodo() throws IOException {}
+
+Checked Exceptions: Erros previstos (exigem tratamento com try-catch ou declaração com throws).
+Exemplo: IOException, SQLException
+
+Unchecked Exceptions: Erros de lógica (não exigem tratamento).
+Exemplo: NullPointerException, ArithmeticException
