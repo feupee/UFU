@@ -1,0 +1,484 @@
+import pygame
+import config
+
+from algoritmos import (
+    desenhar_linha_dda,
+    vizinhos_8conectado,
+    pinta_8conectado,
+    desenhar_circulo,
+    desenhar_circulo_preenchido,
+    desenhar_retangulo,
+    desenhar_retangulo_preenchido,
+    get_pixel
+)
+from botao import (
+    obter_ferramenta_clicada,
+    obter_cor_clicada,
+    mouse_sobre_algum_botao,
+    mouse_sobre_interface
+)
+from canvas import desenhar_surface_na_matriz
+
+
+
+def obter_altura_barra():
+    """
+    Retorna a altura da barra superior.
+
+    Se a constante ALTURA_BARRA ainda não existir em config.py,
+    usa 0 para manter compatibilidade com a versão antiga do projeto.
+    """
+
+    return getattr(config, "ALTURA_BARRA", 0)
+
+
+def mouse_sobre_barra(posicao_mouse):
+    """
+    Verifica se o mouse está na área da barra superior.
+    """
+
+    return posicao_mouse[1] < config.MENU_ALTURA
+
+
+def converter_posicao_para_canvas(posicao_mouse):
+    """
+    Converte a posição do mouse na janela para a posição correta dentro do canvas.
+
+    Exemplo:
+    Se o canvas começa em x = 70 e y = 32, e o mouse está em (100, 80),
+    então dentro do canvas o ponto correto é (30, 48).
+    """
+
+    x, y = posicao_mouse
+    return (x - config.CANVAS_X, y - config.CANVAS_Y)
+
+
+def obter_largura_canvas(canvas):
+    if len(canvas) == 0:
+        return 0
+
+    return len(canvas[0])
+
+
+def obter_altura_canvas(canvas):
+    return len(canvas)
+
+
+def ponto_dentro_canvas(canvas, ponto):
+    """
+    Verifica se o ponto está dentro dos limites do canvas.
+    Isso evita erro ao usar ferramentas como o balde de tinta fora da área de desenho.
+    """
+
+    x, y = ponto
+    return 0 <= x < obter_largura_canvas(canvas) and 0 <= y < obter_altura_canvas(canvas)
+
+
+def ponto_janela_dentro_canvas(posicao_mouse):
+    """
+    Verifica se a posição do mouse, ainda em coordenadas da janela,
+    está dentro da área visível do canvas.
+    """
+
+    x, y = posicao_mouse
+    return (
+        config.CANVAS_X <= x < config.CANVAS_X + config.CANVAS_LARGURA and
+        config.CANVAS_Y <= y < config.CANVAS_Y + config.CANVAS_ALTURA
+    )
+
+
+def tratar_mouse_down(evento, estado, canvas, canvas_visual):
+    """
+    Trata o clique do mouse.
+
+    Primeiro verifica se o clique foi em algum botão.
+    Se foi, troca a ferramenta.
+    Se não foi, inicia o desenho no canvas.
+    """
+
+    if evento.button == 1:
+
+        ferramenta_clicada = obter_ferramenta_clicada(evento.pos)
+
+        # Se clicou em algum botão de ferramenta
+        if ferramenta_clicada is not None:
+            estado["ferramenta"] = ferramenta_clicada
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+
+            return
+
+        cor_clicada = obter_cor_clicada(evento.pos)
+
+        # Se clicou em alguma cor da paleta
+        if cor_clicada is not None:
+            estado["cor_atual"] = cor_clicada
+
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+
+            return
+
+        # Evita desenhar em cima da área da interface
+        if mouse_sobre_interface(evento.pos):
+            return
+
+        # Evita desenhar em cima da área da barra superior
+        if mouse_sobre_barra(evento.pos):
+            return
+
+        # Evita desenhar em cima da área dos botões
+        if mouse_sobre_algum_botao(evento.pos):
+            return
+
+        ponto_canvas = converter_posicao_para_canvas(evento.pos)
+
+        if not ponto_dentro_canvas(canvas, ponto_canvas):
+            return
+
+        # Ferramenta de texto não desenha imediatamente.
+        # Ela apenas guarda a posição onde o texto será escrito.
+        if estado["ferramenta"] == "texto":
+            estado["texto_digitando"] = True
+            estado["texto_posicao"] = ponto_canvas
+            estado["texto_atual"] = ""
+
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+
+            return
+
+        # Inicia o desenho no canvas
+        estado["mouse_pressionado"] = True
+        estado["ponto_inicial"] = ponto_canvas
+        estado["ponto_final"] = ponto_canvas
+
+        # Escopo para ferramentas que desenham ao clicar
+        if estado["ferramenta"] == "lapis":
+            desenhar_linha_dda(
+                canvas,
+                estado["ponto_inicial"],
+                ponto_canvas,
+                estado["cor_atual"],
+                estado["espessura"],
+                canvas_visual
+            )
+            estado["ponto_inicial"] = ponto_canvas
+
+        elif estado["ferramenta"] == "borracha":
+            desenhar_linha_dda(
+                canvas,
+                estado["ponto_inicial"],
+                ponto_canvas,
+                estado["cor_fundo"],
+                estado["espessura"],
+                canvas_visual
+            )
+            estado["ponto_inicial"] = ponto_canvas
+
+        elif estado["ferramenta"] == "preenchimento":
+            ponto = ponto_canvas
+            cor_original = get_pixel(canvas, ponto[0], ponto[1])
+            cor_nova = tuple(estado["cor_atual"][:3])
+
+            if cor_original != cor_nova:
+                visitado = vizinhos_8conectado(canvas, ponto, cor_original)
+                pinta_8conectado(canvas, visitado, cor_nova, canvas_visual)
+
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+
+        elif estado["ferramenta"] == "conta-gotas":
+            cor_clicada = get_pixel(canvas, ponto_canvas[0], ponto_canvas[1])
+
+            if cor_clicada is not None:
+                estado["cor_atual"] = cor_clicada
+
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+
+
+def tratar_mouse_motion(evento, estado, canvas, canvas_visual):
+    """
+    Trata o movimento do mouse.
+
+    Essa função pode ser usada para ferramentas que desenham enquanto o mouse
+    está pressionado, como lápis ou borracha.
+
+    Para linha, retângulo e círculo, aqui só atualizamos o ponto final. A prévia
+    em tempo real é desenhada pelo Pygame em uma cópia da Surface visual.
+    """
+
+    if estado["mouse_pressionado"]:
+
+        if not ponto_janela_dentro_canvas(evento.pos):
+            return
+
+        ponto_canvas = converter_posicao_para_canvas(evento.pos)
+
+        if not ponto_dentro_canvas(canvas, ponto_canvas):
+            return
+
+        # Atualiza o ponto final enquanto o mouse se move
+        estado["ponto_final"] = ponto_canvas
+
+        # Escopo para ferramentas que desenham durante o movimento
+        if estado["ferramenta"] == "lapis":
+            desenhar_linha_dda(
+                canvas,
+                estado["ponto_inicial"],
+                ponto_canvas,
+                estado["cor_atual"],
+                estado["espessura"],
+                canvas_visual
+            )
+            estado["ponto_inicial"] = ponto_canvas
+
+        elif estado["ferramenta"] == "borracha":
+            desenhar_linha_dda(
+                canvas,
+                estado["ponto_inicial"],
+                ponto_canvas,
+                estado["cor_fundo"],
+                estado["espessura"],
+                canvas_visual
+            )
+            estado["ponto_inicial"] = ponto_canvas
+
+
+def tratar_mouse_up(evento, estado, canvas, canvas_visual):
+    """
+    Trata o momento em que o usuário solta o botão do mouse.
+    """
+
+    if evento.button == 1:
+
+        # Se não existe ponto inicial, significa que o clique foi em algum botão
+        # ou em uma área que não deve gerar desenho
+        if estado["ponto_inicial"] is None:
+            estado["mouse_pressionado"] = False
+            estado["ponto_final"] = None
+            return
+
+        if not ponto_janela_dentro_canvas(evento.pos):
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+            return
+
+        ponto_canvas = converter_posicao_para_canvas(evento.pos)
+
+        if not ponto_dentro_canvas(canvas, ponto_canvas):
+            estado["mouse_pressionado"] = False
+            estado["ponto_inicial"] = None
+            estado["ponto_final"] = None
+            return
+
+        # Finaliza o desenho
+        estado["mouse_pressionado"] = False
+        estado["ponto_final"] = ponto_canvas
+
+        # Ferramenta linha usando o algoritmo DDA
+        if estado["ferramenta"] == "linha":
+            desenhar_linha_dda(
+                canvas,
+                estado["ponto_inicial"],
+                estado["ponto_final"],
+                estado["cor_atual"],
+                estado["espessura"],
+                canvas_visual
+            )
+
+        # Ferramenta retangulo
+        elif estado["ferramenta"] == "retangulo" and estado["preenchido"] is False:
+            desenhar_retangulo(
+                canvas,
+                estado["ponto_inicial"],
+                estado["ponto_final"],
+                estado["cor_atual"],
+                estado["espessura"],
+                canvas_visual
+            )
+
+        elif estado["ferramenta"] == "retangulo" and estado["preenchido"] is True:
+            desenhar_retangulo_preenchido(
+                canvas,
+                estado["ponto_inicial"],
+                estado["ponto_final"],
+                estado["cor_atual"],
+                espessura=1,
+                canvas_visual=canvas_visual
+            )
+
+        elif estado["ferramenta"] == "circulo":
+            raio = max(
+                abs(estado["ponto_final"][0] - estado["ponto_inicial"][0]),
+                abs(estado["ponto_final"][1] - estado["ponto_inicial"][1])
+            )
+
+            if estado["preenchido"] is True:
+                desenhar_circulo_preenchido(
+                    canvas,
+                    estado["ponto_inicial"][0],
+                    estado["ponto_inicial"][1],
+                    raio,
+                    estado["cor_atual"],
+                    estado["espessura"],
+                    canvas_visual
+                )
+            else:
+                desenhar_circulo(
+                    canvas,
+                    estado["ponto_inicial"][0],
+                    estado["ponto_inicial"][1],
+                    raio,
+                    estado["cor_atual"],
+                    estado["espessura"],
+                    canvas_visual
+                )
+
+        # Limpa os pontos depois de finalizar o desenho
+        estado["ponto_inicial"] = None
+        estado["ponto_final"] = None
+
+
+def carregar_cursor_png(caminho, hotspot=(0, 0)):
+    """
+    Carrega uma imagem PNG e transforma em cursor do pygame.
+    """
+
+    imagem = pygame.image.load(caminho).convert_alpha()
+    cursor = pygame.cursors.Cursor(hotspot, imagem)
+
+    return cursor
+
+
+def carregar_cursores():
+    cursores = {}
+
+    for ferramenta in config.FERRAMENTAS:
+
+        cursores[ferramenta["nome"]] = carregar_cursor_png(
+            ferramenta["cursor"],
+            ferramenta["hotspot"]
+        )
+
+    return cursores
+
+
+def atualizar_cursor(ferramenta, cursores, posicao_mouse=None):
+    """
+    Altera o cursor do mouse de acordo com a ferramenta selecionada,
+    mas somente quando o mouse está dentro da área do canvas.
+
+    Fora do canvas, o cursor volta a ser o cursor padrão do sistema.
+    """
+
+    if posicao_mouse is None:
+        posicao_mouse = pygame.mouse.get_pos()
+
+    if not ponto_janela_dentro_canvas(posicao_mouse):
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+        return
+
+    if ferramenta in cursores:
+        pygame.mouse.set_cursor(cursores[ferramenta])
+    else:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+
+def cancelar_texto(estado):
+    """
+    Cancela a digitação atual da ferramenta de texto.
+    """
+
+    estado["texto_digitando"] = False
+    estado["texto_posicao"] = None
+    estado["texto_atual"] = ""
+
+
+def confirmar_texto(estado, canvas, canvas_visual):
+    """
+    Confirma o texto digitado e desenha definitivamente no canvas.
+    """
+
+    if estado["texto_atual"] == "":
+        cancelar_texto(estado)
+        return
+
+    fonte = pygame.font.SysFont(None, estado["texto_tamanho"])
+
+    superficie_texto = fonte.render(
+        estado["texto_atual"],
+        True,
+        estado["cor_atual"]
+    )
+
+    desenhar_surface_na_matriz(
+        canvas,
+        canvas_visual,
+        superficie_texto,
+        estado["texto_posicao"]
+    )
+
+    cancelar_texto(estado)
+
+
+def tratar_key_down_texto(evento, estado, canvas, canvas_visual):
+    """
+    Trata a digitação da ferramenta de texto.
+    Enter confirma, Esc cancela e Backspace apaga.
+    """
+
+    if not estado["texto_digitando"]:
+        return
+
+    if evento.key == pygame.K_RETURN:
+        confirmar_texto(estado, canvas, canvas_visual)
+
+    elif evento.key == pygame.K_ESCAPE:
+        cancelar_texto(estado)
+
+    elif evento.key == pygame.K_BACKSPACE:
+        estado["texto_atual"] = estado["texto_atual"][:-1]
+
+    else:
+        # evento.unicode contém o caractere digitado.
+        # Algumas teclas, como Shift e Ctrl, têm unicode vazio.
+        if evento.unicode != "":
+            estado["texto_atual"] += evento.unicode
+
+
+def desenhar_previa_texto(canvas_visual, estado):
+    """
+    Desenha uma prévia temporária do texto enquanto o usuário digita.
+    Essa função deve ser usada em uma cópia da Surface visual, não no canvas original.
+    """
+
+    if not estado["texto_digitando"]:
+        return
+
+    if estado["texto_posicao"] is None:
+        return
+
+    fonte = pygame.font.SysFont(None, estado["texto_tamanho"])
+
+    texto = estado["texto_atual"]
+
+    if texto == "":
+        texto = "|"
+    else:
+        texto += "|"
+
+    superficie_texto = fonte.render(
+        texto,
+        True,
+        estado["cor_atual"]
+    )
+
+    canvas_visual.blit(superficie_texto, estado["texto_posicao"])
