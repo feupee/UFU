@@ -1,4 +1,8 @@
 """
+Nomes/Matrícula: 
+Felipe Santos Silva - 12221bcc042
+Marcos Gabriel Moreira Fonseca
+
 desafio1_aluno.py — Desafio 1: Mapa de características para o Perceptron
 GBC073 — Inteligência Computacional (FACOM/UFU)
 
