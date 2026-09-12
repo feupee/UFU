@@ -1,6 +1,6 @@
 """
-Nomes/Matrícula: 
-Felipe Santos Silva - 12221bcc042
+Autores: 
+Felipe Santos Silva
 Marcos Gabriel Moreira Fonseca
 
 desafio1_aluno.py — Desafio 1: Mapa de características para o Perceptron
