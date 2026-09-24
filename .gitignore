@@ -1,0 +1,34 @@
+# Ambientes virtuais Python
+.venv/
+.venv-gpu/
+venv/
+env/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+
+# Arquivos de ambiente / segredos
+.env
+.env.*
+
+# Datasets baixados
+dados/
+
+# Cache do harness
+calibracao_d2.json
+
+# Arquivos compactados
+*.zip
+
+# IDEs
+.vscode/
+.idea/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Temporários
+*.tmp
+*.log
