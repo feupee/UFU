@@ -1,3 +1,5 @@
+# Nomes: Felipe Santos Silva e Marcos Gabriel Moreira Fonseca
+
 import math
 import torch
 
