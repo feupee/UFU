@@ -1,0 +1,8 @@
+{
+  "passos": 500,
+  "lote": 64,
+  "device": "cuda",
+  "treinador": "43d62bf0197e28f7990a3996f00995870bff2bb437da8c24ed4b24076fe7d1ae",
+  "executor": "855686ebe15e9fbd4f0885a31394596cca1874a4c537ee70c8a659c408a21e5b",
+  "dados": "f76c0f78ab84d8f39ebc55f2dd09e151f7da47f59737448007e8920ac2877a67"
+}

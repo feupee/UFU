@@ -1,0 +1,76 @@
+{
+  "baseline_execucoes": [
+    "a168248679c2932c",
+    "a715a2202ff1857c",
+    "d0e33c56bf9ca1a3"
+  ],
+  "baseline_media": 8.61691584189733,
+  "baseline_desvio": 0.2777108460296815,
+  "receitas": [
+    {
+      "otimizador": "muon",
+      "lr": 0.01,
+      "agenda": "cosseno",
+      "execucoes": [
+        "1ff65cc0c68413f5",
+        "b60ba1118f79fe2f",
+        "f0714cec6a981eb7"
+      ],
+      "media": 8.137643585602442,
+      "desvio": 0.030830447452907812,
+      "ganho": 0.4792722562948863,
+      "desvio_ganho": 0.2756162903950488,
+      "divergiu": false
+    },
+    {
+      "otimizador": "adamw",
+      "lr": 0.01,
+      "agenda": "warmup_cosseno",
+      "execucoes": [
+        "a1edf1ab7ed88d48",
+        "9711f075185f2ca5",
+        "4f495b8f9032b2f7"
+      ],
+      "media": 8.301493525505066,
+      "desvio": 0.16247162465425408,
+      "ganho": 0.31542231639226276,
+      "desvio_ganho": 0.20856998826758474,
+      "divergiu": false
+    },
+    {
+      "otimizador": "muon",
+      "lr": 0.01,
+      "agenda": "warmup_cosseno",
+      "execucoes": [
+        "95166c136966e990",
+        "0d7ff19272c27598",
+        "7b89dc55835e7734"
+      ],
+      "media": 8.134907484054565,
+      "desvio": 0.0054240160734239954,
+      "ganho": 0.48200835784276325,
+      "desvio_ganho": 0.2782921238803717,
+      "divergiu": false
+    }
+  ],
+  "melhor_media": {
+    "otimizador": "muon",
+    "lr": 0.01,
+    "agenda": "warmup_cosseno",
+    "execucoes": [
+      "95166c136966e990",
+      "0d7ff19272c27598",
+      "7b89dc55835e7734"
+    ],
+    "media": 8.134907484054565,
+    "desvio": 0.0054240160734239954,
+    "ganho": 0.48200835784276325,
+    "desvio_ganho": 0.2782921238803717,
+    "divergiu": false
+  },
+  "supera_baseline": true,
+  "vencedor_unico": false,
+  "selecionada_teste": "95166c136966e990",
+  "semente_teste": 42,
+  "regra": "Ganho > máximo dos desvios da baseline, candidata e ganhos pareados; vencedor único também separado das demais médias por seus desvios. Heurística, não significância estatística."
+}

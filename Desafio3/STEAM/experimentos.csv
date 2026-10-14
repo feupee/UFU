@@ -1,0 +1,4 @@
+execucao,otimizador,agenda,lr,weight_decay,semente,lote,passos_planejados,passos_concluidos,mae_val_final_pp,divergiu,motivo,tempo_segundos,pasta_logs
+baseline_s42_1791885152190866600,AdamW,constante,0.001,0.01,42,256,2000,2000,10.857610404491425,False,,12.387155999999777,logs\baseline_s42_1791885152190866600
+baseline_s43_1791885500222688900,AdamW,constante,0.001,0.01,43,256,2000,2000,10.845799744129181,False,,11.646454100000483,logs\baseline_s43_1791885500222688900
+baseline_s44_1791885829258703600,AdamW,constante,0.001,0.01,44,256,2000,2000,10.59001311659813,False,,12.38887220000015,logs\baseline_s44_1791885829258703600

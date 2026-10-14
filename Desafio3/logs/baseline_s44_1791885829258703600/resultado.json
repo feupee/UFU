@@ -1,0 +1,16 @@
+{
+  "execucao": "baseline_s44_1791885829258703600",
+  "otimizador": "AdamW",
+  "agenda": "constante",
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "semente": 44,
+  "lote": 256,
+  "passos_planejados": 2000,
+  "passos_concluidos": 2000,
+  "mae_val_final_pp": 10.59001311659813,
+  "divergiu": false,
+  "motivo": "",
+  "tempo_segundos": 12.38887220000015,
+  "pasta_logs": "logs\\baseline_s44_1791885829258703600"
+}
