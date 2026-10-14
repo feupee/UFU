@@ -1,3 +1,6 @@
+# Felipe Santos Silva - 12221BCC042
+# Marcos Gabriel Moreira Fonseca - 12221BCC043
+
 """Relatórios derivados dos registros reais; não inventa convergência ou vencedor."""
 import argparse,json,textwrap
 from pathlib import Path

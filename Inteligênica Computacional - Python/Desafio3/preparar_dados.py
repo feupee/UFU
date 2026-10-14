@@ -1,3 +1,6 @@
+# Felipe Santos Silva - 12221BCC042
+# Marcos Gabriel Moreira Fonseca - 12221BCC043
+
 """Divisão temporal fixa; todo ajuste de atributos usa exclusivamente treino."""
 import argparse, collections, hashlib, json, math, re
 from datetime import datetime, timezone

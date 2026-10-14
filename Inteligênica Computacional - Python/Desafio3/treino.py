@@ -1,3 +1,6 @@
+# Felipe Santos Silva - 12221BCC042
+# Marcos Gabriel Moreira Fonseca - 12221BCC043
+
 """Treinador configurável. Seleção pelo MAE FINAL de validação; teste reservado."""
 import os
 os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG', ':4096:8')

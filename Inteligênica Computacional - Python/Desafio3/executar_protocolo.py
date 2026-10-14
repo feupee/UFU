@@ -1,3 +1,6 @@
+# Felipe Santos Silva - 12221BCC042
+# Marcos Gabriel Moreira Fonseca - 12221BCC043
+
 """Quatro etapas, retomada por configuração, confirmação pareada e teste separado."""
 import argparse,json,statistics
 from pathlib import Path

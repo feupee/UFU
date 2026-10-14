@@ -1,3 +1,6 @@
+# Felipe Santos Silva - 12221BCC042
+# Marcos Gabriel Moreira Fonseca - 12221BCC043
+
 """Avaliação única da receita já congelada. Não ajusta o modelo usando o teste."""
 import argparse,json
 from pathlib import Path
