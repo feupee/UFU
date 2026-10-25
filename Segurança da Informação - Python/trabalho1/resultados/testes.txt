@@ -1,0 +1,12 @@
+test_absent_and_invalid (test_rt.Tests.test_absent_and_invalid) ... ok
+test_duplicate_endpoints_and_roundtrip (test_rt.Tests.test_duplicate_endpoints_and_roundtrip) ... ok
+test_encoding_bijection (test_rt.Tests.test_encoding_bijection) ... ok
+test_exhaustive_lookup_matches_coverage (test_rt.Tests.test_exhaustive_lookup_matches_coverage) ... ok
+test_official_list (test_rt.Tests.test_official_list) ... ok
+test_professor_vector (test_rt.Tests.test_professor_vector) ... ok
+test_reduction_range (test_rt.Tests.test_reduction_range) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.012s
+
+OK
